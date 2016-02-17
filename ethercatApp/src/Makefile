@@ -28,21 +28,21 @@ DBD += ecAsyn.dbd
 PROD_LDFLAGS += $(LIBXML2_LINK)
 PROD_SYS_LIBS += xml2
 
-PROD_IOC += ethercat
+PROD_IOC += ethercatIOC
 
-ethercat_DBD += base.dbd ecAsyn.dbd
+ethercatIOC_DBD += base.dbd ecAsyn.dbd
 
 # Registration, IOC Shell and MAIN
-ethercat_SRCS_DEFAULT += ethercat_registerRecordDeviceDriver.cpp ethercatMain.cpp
+ethercatIOC_SRCS_DEFAULT += ethercatIOC_registerRecordDeviceDriver.cpp ethercatIOCMain.cpp
 
 # Generic ADC driver;  TDI-CTRL-REQ-015
-ethercat_SRCS += gadc.cpp
+ethercatIOC_SRCS += gadc.cpp
 
 # ===================================
 # Need to link libraries
 # ===================================
-ethercat_LIBS += ecAsyn asyn 
-ethercat_LIBS += scannerlib rtutils
-ethercat_LIBS += $(EPICS_BASE_IOC_LIBS)
+ethercatIOC_LIBS += ecAsyn asyn 
+ethercatIOC_LIBS += scannerlib rtutils
+ethercatIOC_LIBS += $(EPICS_BASE_IOC_LIBS)
 
 include $(TOP)/configure/RULES
