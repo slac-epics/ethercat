@@ -1,0 +1,6 @@
+Release Notes for the EPICS ethercat module
+--------------------------------------------------
+
+ethercat-R4-3_1-0: 2016-02-17 E. Williams
+	* Integrated ethercat version 4-3 into SLAC environment
+
