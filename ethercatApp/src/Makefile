@@ -11,7 +11,7 @@ USR_INCLUDES += $(ETHERCAT_INCLUDE)
 LIBRARY_IOC += ecAsyn 
 
 # Sources to build ecAsyn
-ecAsyn_SRCS += ecAsyn.cpp
+ecAsyn_SRCS += ecAsyn.cpp gadc.cpp
 
 xml2_DIR = $(LIBXML2_LIB)
 ecAsyn_LIBS += xml2
