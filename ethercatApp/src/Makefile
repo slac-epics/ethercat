@@ -2,13 +2,16 @@ TOP=../..
 
 include $(TOP)/configure/CONFIG
 
+USR_INCLUDES += $(LIBXML2_INCLUDE)
+USR_INCLUDES += $(ETHERCAT_INCLUDE)
+
 # ========================================================
 # Let's Build the Library
 # ========================================================
 LIBRARY_IOC += ecAsyn 
 
 # Sources to build ecAsyn
-ecAsyn_SRCS += ecAsyn.cpp gadc.cpp
+ecAsyn_SRCS += ecAsyn.cpp
 
 xml2_DIR = $(LIBXML2_LIB)
 ecAsyn_LIBS += xml2
@@ -24,13 +27,12 @@ DBD += ecAsyn.dbd
 PROD_IOC += ethercat
 ethercat_DBD += base.dbd ecAsyn.dbd
 ethercat_SRCS += ethercat_registerRecordDeviceDriver.cpp
-USR_INCLUDES += $(LIBXML2_INCLUDE)
-USR_INCLUDES += $(ETHERCAT_INCLUDE)
-ecAsyn_INCLUDES += -I../../include
 
-# These two lines are needed for non-vxWorks builds, such as Linux
+# IOC Shell and MAIN
 ethercat_SRCS_DEFAULT += ethercatMain.cpp
-ethercat_SRCS_vxWorks += -nil-
+
+# Generic ADC driver;  TDI-CTRL-REQ-015
+ethercat_SRCS += gadc.cpp
 
 # ===================================
 # Need to link libraries
