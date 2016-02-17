@@ -36,6 +36,7 @@ ethercat_DIR = $(ETHERCAT_LIB)
 USR_INCLUDES += $(ETHERCAT_INCLUDE)
 USR_INCLUDES += $(LIBXML2_INCLUDE)
 USR_LDFLAGS += $(ETHERCAT_LINK)
+USR_LDFLAGS += $(LIBXML2_LINK)
 INC += classes.h parser.h classes.h unpack.h messages.h liberror.h
 #INC += classes.h parser.h classes.h unpack.h messages.h
 
@@ -49,7 +50,7 @@ scanner_INCLUDES_Linux += -I$(ETHERLAB_RT)/lib
 scanner_INCLUDES_Linux += -I$(ETHERLAB)/lib
 scanner_SRCS += scanner.c simulation.c
 scanner_LIBS += rtutils scannerlib Com
-
+scanner_SUPPORT_LIBS += xml2
 PROD += serialtool
 # need private header files for the serial number write IOCTL
 #serialtool_INCLUDES += -I$(ETHERLAB)/src/ethercat-$(subst -,.,$(VERSION))/master
