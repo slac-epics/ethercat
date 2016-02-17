@@ -4,9 +4,6 @@ include $(TOP)/configure/CONFIG
 
 # build a program
 
-SHARED_LIBRARIES=NO
-STATIC_BUILD=YES
-
 # work-around for ioc builder's benefit:
 # the symbol below moved from $(TOP)/configure/RELEASE
 VERSION=1-5-2dls5
