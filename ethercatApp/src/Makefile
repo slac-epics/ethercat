@@ -13,8 +13,16 @@ LIBRARY_IOC += ecAsyn
 # Sources to build ecAsyn
 ecAsyn_SRCS += ecAsyn.cpp gadc.cpp
 
+z_DIR = $(ZLIB_LIB)
+lzma_DIR = $(XZ_LIB)
 xml2_DIR = $(LIBXML2_LIB)
-ecAsyn_LIBS += xml2
+
+USR_LIBS_Linux += xml2 z lzma
+
+USR_INCLUDES += $(ZLIB_INCLUDE)
+USR_INCLUDES += $(XZ_INCLUDE)
+USR_INCLUDES += $(LIBXML2_INCLUDE)
+
 ecAsyn_LIBS += asyn scannerlib rtutils
 ecAsyn_LIBS += $(EPICS_BASE_IOC_LIBS)
 
@@ -25,8 +33,6 @@ DBD += ecAsyn.dbd
 # ========================================================
 # Let's Build an IOC Application in here too
 # ========================================================
-PROD_LDFLAGS += $(LIBXML2_LINK)
-PROD_SYS_LIBS += xml2
 
 PROD_IOC += ethercatIOC
 
