@@ -12,13 +12,15 @@ PACKAGE_SITE_TOP=/afs/slac/g/lcls/package
 
 ETHERLAB_RT=/afs/slac/g/lcls/package/linuxKernel_Modules/ethercat/buildroot-2015.02-x86_64
 
-ETHERCAT_LIB = $(ETHERLAB_RT)/lib/.libs/libethercat
+ETHERCAT_LIB = $(ETHERLAB_RT)/lib/.libs
 ETHERCAT_INCLUDE = -I$(ETHERLAB_RT)/include
 ETHERCAT_LINK = -L$(ETHERLAB_RT)/lib/.libs -Wl,-rpath=$(ETHERLAB_RT)/lib/.libs
 
-#LIBXML2_LIB = $(STAGE_X86)/usr/lib
-#LIBXML2_INCLUDE = -I$(STAGE_X86)/usr/include -I$(STAGE_X86)/usr/include/libxml2
+XZ_LIB=$(PACKAGE_SITE_TOP)/xz/5.2.2/buildroot-2015.02-x86_64/lib
+XZ_INCLUDE = -I$(PACKAGE_SITE_TOP)/xz/5.2.2/buildroot-2015.02-x86_64/include
+
+ZLIB_LIB=$(PACKAGE_SITE_TOP)/zlib/1.2.8/buildroot-2015.02-x86_64/lib
+ZLIB_INCLUDE = -I$(PACKAGE_SITE_TOP)/zlib/1.2.8/buildroot-2015.02-x86_64/include
 
 LIBXML2_LIB = $(PACKAGE_SITE_TOP)/libxml2/2.9.3/buildroot-2015.02-x86_64/lib
 LIBXML2_INCLUDE = -I$(STAGE_X86)/usr/include -I$(PACKAGE_SITE_TOP)/libxml2/2.9.3/buildroot-2015.02-x86_64/include/libxml2
-LIBXML2_LINK = -L$(LIBXML2_LIB)
