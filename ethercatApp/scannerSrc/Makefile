@@ -2,14 +2,6 @@ TOP=../..
 
 include $(TOP)/configure/CONFIG
 
-# build a program
-
-# work-around for ioc builder's benefit:
-# the symbol below moved from $(TOP)/configure/RELEASE
-VERSION=1-5-2dls5
-ETHERLABPREFIX=$(ETHERLAB)/MAIN_TRUNK
-
-
 z_DIR = $(ZLIB_LIB)
 lzma_DIR = $(XZ_LIB)
 xml2_DIR = $(LIBXML2_LIB)
