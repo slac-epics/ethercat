@@ -1,20 +1,16 @@
 -include $(TOP)/configure/CONFIG_SITE
 
-# For linuxRT-x86
+# For linuxRT_glibc-x86_64 (buildroot-2015.02-x86_64)
 
-# Define the location of the hdf5, sz
-# So only need to define location of libs and headers
-#BUILDROOT_HOME=/u/cd/mdewart/buildroot
-#BUILDROOT_HOME=/afs/slac/g/lcls/package/linuxRT/buildroot-2014.11
 BUILDROOT_HOME=/afs/slac/package/linuxRT/buildroot-2015.02
 STAGE_X86=$(BUILDROOT_HOME)/buildroot-2015.02-x86_64/output/staging
+
 PACKAGE_SITE_TOP=/afs/slac/g/lcls/package
 
-ETHERLAB_RT=/afs/slac/g/lcls/package/linuxKernel_Modules/ethercat/buildroot-2015.02-x86_64
+ETHERLAB_RT=$(PACKAGE_SITE_TOP)/linuxKernel_Modules/ethercat/buildroot-2015.02-x86_64
 
 ETHERCAT_LIB = $(ETHERLAB_RT)/lib/.libs
 ETHERCAT_INCLUDE = -I$(ETHERLAB_RT)/include
-ETHERCAT_LINK = -L$(ETHERLAB_RT)/lib/.libs -Wl,-rpath=$(ETHERLAB_RT)/lib/.libs
 
 XZ_LIB=$(PACKAGE_SITE_TOP)/xz/5.2.2/buildroot-2015.02-x86_64/lib
 XZ_INCLUDE = -I$(PACKAGE_SITE_TOP)/xz/5.2.2/buildroot-2015.02-x86_64/include
@@ -23,4 +19,4 @@ ZLIB_LIB=$(PACKAGE_SITE_TOP)/zlib/1.2.8/buildroot-2015.02-x86_64/lib
 ZLIB_INCLUDE = -I$(PACKAGE_SITE_TOP)/zlib/1.2.8/buildroot-2015.02-x86_64/include
 
 LIBXML2_LIB = $(PACKAGE_SITE_TOP)/libxml2/2.9.3/buildroot-2015.02-x86_64/lib
-LIBXML2_INCLUDE = -I$(STAGE_X86)/usr/include -I$(PACKAGE_SITE_TOP)/libxml2/2.9.3/buildroot-2015.02-x86_64/include/libxml2
+LIBXML2_INCLUDE = -I$(PACKAGE_SITE_TOP)/libxml2/2.9.3/buildroot-2015.02-x86_64/include/libxml2
