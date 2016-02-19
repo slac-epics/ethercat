@@ -1,6 +1,6 @@
 -include $(TOP)/configure/CONFIG_SITE
 
-# For linux-x86_64
+# For linux-x86_64 (rhel6-x86_64)
 
 PACKAGE_SITE_TOP=/afs/slac/g/lcls/package
 
@@ -8,7 +8,6 @@ ETHERLAB=/afs/slac/g/lcls/package/linuxKernel_Modules/ethercat/MAIN_TRUNK_linux-
 
 ETHERCAT_LIB = $(ETHERLAB)/lib/.libs
 ETHERCAT_INCLUDE = -I$(ETHERLAB)/include
-ETHERCAT_LINK = -L$(ETHERLAB)/lib/.libs -Wl,-rpath=$(ETHERLAB)/lib/.libs
 
 XZ_LIB=$(PACKAGE_SITE_TOP)/xz/5.2.2/rhel6-x86_64/lib
 XZ_INCLUDE = -I$(PACKAGE_SITE_TOP)/xz/5.2.2/rhel6-x86_64/include
