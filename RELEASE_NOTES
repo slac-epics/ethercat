@@ -1,6 +1,15 @@
 Release Notes for the EPICS ethercat module
 --------------------------------------------------
 
+ethercat-R4-3_1-1: 2016-02-24: Done by Jesus
+         * modify the scanner code on MAIN_TRUNK in order to pass 
+           the loop frequency as a parameter. 
+           You can now pass the frequency in Hz with the option "-f", 
+           for example for a 100Hz loop you will:
+           [ scanner -f 100 .... ]
+           It defaults to 1kHz if no value is passed, 
+           A minimum of 1 Hz and a maximum of 10 kHz are the limits
+
 ethercat-R4-3_1-0: 2016-02-17 E. Williams
 	* Integrated ethercat version 4-3 into SLAC environment
 
