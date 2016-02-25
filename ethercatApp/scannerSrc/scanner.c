@@ -35,7 +35,15 @@ long frame_time_ns = 50000;
 
 typedef enum _BOOL { FALSE = 0, TRUE = 1} BOOL;
 
-enum { PERIOD_NS = 1000000 };
+//enum { PERIOD_NS = 10000000 };
+enum
+{
+        FREQ_HZ_MIN =           1,
+        FREQ_HZ_MAX =           10000,
+        FREQ_HZ_DEFAULT =       1000
+};
+unsigned long period_ns = 1000000000 / FREQ_HZ_DEFAULT;
+
 #define TIMESPEC2NS(T) ((uint64_t) (T).tv_sec * NSEC_PER_SEC + (T).tv_nsec)
 
 struct CLIENT;
@@ -830,8 +838,10 @@ int device_initialize(SCANNER * scanner, EC_DEVICE * device)
                100ns... */
             ecrt_slave_config_dc(sc,
                 device->device_type->oversampling_activate,
-                PERIOD_NS / device->oversampling_rate, 0,
-                PERIOD_NS - (PERIOD_NS / device->oversampling_rate), 0);
+                //PERIOD_NS / device->oversampling_rate, 0,
+                //PERIOD_NS - (PERIOD_NS / device->oversampling_rate), 0);
+                period_ns / device->oversampling_rate, 0,
+                period_ns - (period_ns / device->oversampling_rate), 0);
         }
     }
 
@@ -979,14 +989,24 @@ static int send_config_on_connect(ENGINE * server, int sock)
                           client->scanner->config_size);
 }
 
+void usage(char **argv)
+{
+        fprintf(stderr,"Usage: %s [-f freq_hz][-m master_index] [-s] [-q] scanner.xml socket_path\n", argv[0]);
+        fprintf(stderr,"  freq_hz: scanner loop frequncy in Hz (MAX=%d, MIN=%d, DEFAULT=%d)\n\n",FREQ_HZ_MAX,FREQ_HZ_MIN,FREQ_HZ_DEFAULT);
+        exit(1);
+}
+
 int main(int argc, char ** argv)
 {
     int simulation = 0;
     int master_index = 0;
     opterr = 0;
+    unsigned int freq_hz;
+
     while (1)
     {
-        int cmd = getopt (argc, argv, "qsm:");
+        //int cmd = getopt (argc, argv, "qsm:");
+        int cmd = getopt (argc, argv, "qsmf:");
         if(cmd == -1)
         {
             break;
@@ -1002,19 +1022,29 @@ int main(int argc, char ** argv)
         case 'm':
             master_index = atoi(optarg);
             break;
+        case 'f':
+            if (sscanf(optarg, "%u", &freq_hz) != 1)
+                usage(argv);
+            if ((freq_hz > FREQ_HZ_MAX) || (freq_hz < FREQ_HZ_MIN))
+                usage(argv);
+            period_ns = 1000000000 / freq_hz;
+            break;
         }
     }
 
     if(argc - optind < 2)
-    {
-        fprintf(stderr, "usage: scanner [-m master_index] [-s] [-q] scanner.xml socket_path\n");
-        exit(1);
-    }
+        usage(argv);
+    //{
+    //    fprintf(stderr, "usage: scanner [-m master_index] [-s] [-q] scanner.xml socket_path\n");
+    //    exit(1);
+    //}
+
 
     char * xml_filename = argv[optind++];
     char * path = argv[optind++];
 
-    fprintf(stderr, "Scanner xml(%s) socket(%s) PDO display(%d)\n", xml_filename, path, selftest);
+    //fprintf(stderr, "Scanner xml(%s) socket(%s) PDO display(%d)\n", xml_filename, path, selftest);
+    fprintf(stderr, "Scanner xml(%s) socket(%s) PDO display(%d) period ns(%d)\n", xml_filename, path, selftest, period_ns);
 
     // start scanner
     SCANNER * scanner = start_scanner(xml_filename,
@@ -1085,7 +1115,8 @@ int main(int argc, char ** argv)
     {
         printf("created high priority thread for cyclic task\n");
     }
-    new_timer(PERIOD_NS, scanner->workq, prio, MSG_TICK);
+    //new_timer(PERIOD_NS, scanner->workq, prio, MSG_TICK);
+    new_timer(period_ns, scanner->workq, prio, MSG_TICK);
 
     if(dumplatency)
     {
