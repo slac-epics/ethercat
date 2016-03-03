@@ -11,7 +11,8 @@ void cyclic_task(void * usr)
 
 int main()
 {
-    enum { PRIO_LOW = 0, PRIO_HIGH = 60 };
+    //enum { PRIO_LOW = 0, PRIO_HIGH = 60 };
+    enum { PRIO_LOW = 0, PRIO_HIGH = 40 };
     int prio = PRIO_HIGH;
     if(rtThreadCreate("cyclic", prio, 0, cyclic_task, NULL) == NULL)
     {

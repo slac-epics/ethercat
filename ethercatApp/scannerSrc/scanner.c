@@ -91,7 +91,8 @@ struct CLIENT
     int id;
 };
 
-enum { PRIO_LOW = 0, PRIO_HIGH = 60 };
+//enum { PRIO_LOW = 0, PRIO_HIGH = 60 };
+enum { PRIO_LOW = 0, PRIO_HIGH = 40 };
 
 /* prototypes */
 EC_DEVICE * get_device(SCANNER * scanner, int device_index);
