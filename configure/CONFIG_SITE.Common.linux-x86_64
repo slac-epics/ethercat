@@ -4,7 +4,7 @@
 
 PACKAGE_SITE_TOP=/afs/slac/g/lcls/package
 
-ETHERLAB=/afs/slac/g/lcls/package/linuxKernel_Modules/ethercat/MAIN_TRUNK_linux-x86_64
+ETHERLAB=/afs/slac/g/lcls/package/linuxKernel_Modules/ethercat/rhel6-linux-x86_64
 
 ETHERCAT_LIB = $(ETHERLAB)/lib/.libs
 ETHERCAT_INCLUDE = -I$(ETHERLAB)/include
