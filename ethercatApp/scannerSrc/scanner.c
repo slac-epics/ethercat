@@ -25,7 +25,8 @@
 
 #include "liberror.h"
 
-int debug = 1;
+//int debug = 1;
+int debug = 0;
 int selftest = 1;
 int simulation = 0;
 // latency histogram for test only
@@ -992,8 +993,14 @@ static int send_config_on_connect(ENGINE * server, int sock)
 
 void usage(char **argv)
 {
-        fprintf(stderr,"Usage: %s [-f freq_hz][-m master_index] [-s] [-q] scanner.xml socket_path\n", argv[0]);
-        fprintf(stderr,"  freq_hz: scanner loop frequncy in Hz (MAX=%d, MIN=%d, DEFAULT=%d)\n\n",FREQ_HZ_MAX,FREQ_HZ_MIN,FREQ_HZ_DEFAULT);
+        fprintf(stderr,"Usage: %s [-f freq_hz][-m master_index] [-s] [-q] [-d] [-l] scanner.xml socket_path\n", argv[0]);
+        fprintf(stderr,"  -f <freq_hz>: set scanner loop frequency to <freq_hz> Hz (MAX=%d, MIN=%d, DEFAULT=%d)\n",FREQ_HZ_MAX,FREQ_HZ_MIN,FREQ_HZ_DEFAULT);
+        fprintf(stderr,"  -m <master_index>: set master index to <master_index>\n");
+        fprintf(stderr,"  -s: set simluation mode ON\n");
+        fprintf(stderr,"  -q: disable self test\n");
+        fprintf(stderr,"  -d: set debug ON\n");
+        fprintf(stderr,"  -l: set latency dump ON\n"); 
+        fprintf(stderr,"\n");
         exit(1);
 }
 
@@ -1007,7 +1014,7 @@ int main(int argc, char ** argv)
     while (1)
     {
         //int cmd = getopt (argc, argv, "qsm:");
-        int cmd = getopt (argc, argv, "qsmf:");
+        int cmd = getopt (argc, argv, "qsdlm:f:");
         if(cmd == -1)
         {
             break;
@@ -1030,6 +1037,12 @@ int main(int argc, char ** argv)
                 usage(argv);
             period_ns = 1000000000 / freq_hz;
             break;
+        case 'd':
+            debug = 1;
+            break;
+        case 'l':
+            dumplatency = 1;
+            break;
         }
     }
 
@@ -1040,12 +1053,11 @@ int main(int argc, char ** argv)
     //    exit(1);
     //}
 
-
     char * xml_filename = argv[optind++];
     char * path = argv[optind++];
 
     //fprintf(stderr, "Scanner xml(%s) socket(%s) PDO display(%d)\n", xml_filename, path, selftest);
-    fprintf(stderr, "Scanner xml(%s) socket(%s) PDO display(%d) period ns(%d)\n", xml_filename, path, selftest, period_ns);
+    fprintf(stderr, "Scanner xml(%s) socket(%s) PDO display(%d) period ns(%lu)\n", xml_filename, path, selftest, period_ns);
 
     // start scanner
     SCANNER * scanner = start_scanner(xml_filename,
