@@ -1,5 +1,15 @@
 Release Notes for the EPICS ethercat module
 --------------------------------------------------
+R4.3-1.3.0: 2017-03-07 J. Vasquez
+        * Moved to GIT
+	* Change the ethercat kernel module to etherlabmaster
+	* Added two new inputs arguments to the scanner application:
+            -d : set debug on (default is off)
+            -l : set latency dump on (default is off)
+        * Fixed an missing colon (:) after the 'm'm argument on the
+          getopt function options.
+        * Fixed a long unsigned int printed with %d, instead of %lu
+          on line 1060
 ethercat-R4-3_1-2: 2016-03-03 J. Vasquez
         * Changed the scanner hardcode RT priority from 60 to 40
           on file ethercatApp/scannerSrc/scanner.c

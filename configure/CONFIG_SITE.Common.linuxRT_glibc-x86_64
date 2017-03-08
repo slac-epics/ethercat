@@ -7,7 +7,7 @@ STAGE_X86=$(BUILDROOT_HOME)/buildroot-2015.02-x86_64/output/staging
 
 PACKAGE_SITE_TOP=/afs/slac/g/lcls/package
 
-ETHERLAB_RT=$(PACKAGE_SITE_TOP)/linuxKernel_Modules/ethercat/buildroot-2015.02-x86_64
+ETHERLAB_RT=$(PACKAGE_SITE_TOP)/linuxKernel_Modules/etherlabmaster/R1.5.2-0.2.0/build/buildroot-2015.02-x86_64
 
 ETHERCAT_LIB = $(ETHERLAB_RT)/lib/.libs
 ETHERCAT_INCLUDE = -I$(ETHERLAB_RT)/include
