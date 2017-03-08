@@ -874,6 +874,8 @@ void pack_string(char * buffer, int * ofs, char * str)
 int ethercat_init(SCANNER * scanner)
 {
     ELLNODE * node = ellFirst(&scanner->config->devices);
+    unsigned int slave_count;
+
     for(; node; node = ellNext(node))
     {
         EC_DEVICE * device = (EC_DEVICE *)node;
@@ -884,7 +886,18 @@ int ethercat_init(SCANNER * scanner)
                device->type_revid, device->position);
         device_initialize(scanner, device);
     }
+
+    slave_count = (unsigned int)ellCount(&scanner->config->devices);
+
     printf("PDO SIZE:     %d\n", scanner->pdo_size);
+    printf("Slave count:  %d\n", slave_count);
+
+    if (ecrt_master_set_slave_count(scanner->master, slave_count))
+    {
+       fprintf(stderr, "error: Faild to allocate memory for slave not found notification!\n");
+       exit(1);
+    }
+
     return 0;
 }
 
