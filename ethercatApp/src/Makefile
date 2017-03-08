@@ -55,3 +55,5 @@ ethercatIOC_LIBS += scannerlib rtutils
 ethercatIOC_LIBS += $(EPICS_BASE_IOC_LIBS)
 
 include $(TOP)/configure/RULES
+
+$(COMMON_DIR)/ethercatIOC.dbd: $(COMMON_DIR)/ecAsyn.dbd
