@@ -874,7 +874,6 @@ void pack_string(char * buffer, int * ofs, char * str)
 int ethercat_init(SCANNER * scanner)
 {
     ELLNODE * node = ellFirst(&scanner->config->devices);
-    unsigned int slave_count;
 
     for(; node; node = ellNext(node))
     {
@@ -886,18 +885,7 @@ int ethercat_init(SCANNER * scanner)
                device->type_revid, device->position);
         device_initialize(scanner, device);
     }
-
-    slave_count = (unsigned int)ellCount(&scanner->config->devices);
-
     printf("PDO SIZE:     %d\n", scanner->pdo_size);
-    printf("Slave count:  %d\n", slave_count);
-
-    if (ecrt_master_set_slave_count(scanner->master, slave_count))
-    {
-       fprintf(stderr, "error: Faild to allocate memory for slave not found notification!\n");
-       exit(1);
-    }
-
     return 0;
 }
 
@@ -908,8 +896,18 @@ SCANNER * start_scanner(char * filename, int simulation,
     SCANNER * scanner = calloc(1, sizeof(SCANNER));
     scanner->config = calloc(1, sizeof(EC_CONFIG));
     scanner->simulation = simulation;
+    int max_slave_count;
+
     if (!simulation)
     {
+                // Read the configuration xml file
+        scanner->config_buffer = load_config(filename);
+        assert(scanner->config_buffer);
+        assert(PARSING_OKAY ==
+        read_config(scanner->config_buffer,
+                    strlen(scanner->config_buffer),
+                    scanner->config));
+
         scanner->master = ecrt_request_master(master_index);
         if(scanner->master == NULL)
         {
@@ -929,6 +927,19 @@ SCANNER * start_scanner(char * filename, int simulation,
             fprintf(stderr, "can't get master info\n");
             exit(1);
         }
+        // get max number of slaves (present on the bus vs define on the xml configuration file)
+        max_slave_count = ellCount(&scanner->config->devices);
+        if (master_info.slave_count > max_slave_count)
+            max_slave_count = master_info.slave_count;
+        printf("Slave count:  %d\n", max_slave_count);
+
+        // allocate memory for the slave not found notifications 
+        if (ecrt_master_set_slave_count(scanner->master, max_slave_count))
+        {
+           fprintf(stderr, "error: Faild to allocate memory for slave not found notification!\n");
+           exit(1);
+        }
+
         ec_slave_info_t slave_info;
         for(n = 0; n < master_info.slave_count; n++) {
             if( ecrt_master_get_slave(scanner->master, n,
@@ -944,12 +955,6 @@ SCANNER * start_scanner(char * filename, int simulation,
             ellAdd(&scanner->config->dcs_lookups, &dcs_lookup->node);
         }
     }
-    scanner->config_buffer = load_config(filename);
-    assert(scanner->config_buffer);
-    assert(PARSING_OKAY ==
-           read_config(scanner->config_buffer,
-                       strlen(scanner->config_buffer),
-                       scanner->config));
     ethercat_init(scanner);
     if (simulation)
     {
