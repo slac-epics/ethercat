@@ -1,5 +1,8 @@
 Release Notes for the EPICS ethercat module
 --------------------------------------------------
+R4.3-2.1.0: 2017-06-07 H. Slepicka
+        * Updated asyn to R4.31-0.1.0
+
 R4.3-2.0.0: 2017-03-08 J. Vasquez
         * Updated for EPICS base R3.15.5
 
