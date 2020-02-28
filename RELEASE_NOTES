@@ -1,5 +1,9 @@
 Release Notes for the EPICS ethercat module
 --------------------------------------------------
+R4.3-2.2.0: 2020-02-27 J. Vasquez
+        * Update buildroot to version 2019.08, etherlabmaster to R1.5.2-0.4.0,
+          and libxml2 to 2.9.10.
+
 R4.3-2.1.2: 2019-10-30 slepicka
 	Bumping asyn to R4.32-1.0.0
 
