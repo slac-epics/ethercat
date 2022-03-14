@@ -1,0 +1,16 @@
+-include $(TOP)/configure/CONFIG_SITE
+
+ETHERLABMASTER_VERSION=R1.5.2-0.5.0
+ETHERLAB=$(PACKAGE_SITE_TOP)/linuxKernel_Modules/etherlabmaster/$(ETHERLABMASTER_VERSION)/build/rhel7-x86_64
+
+ETHERCAT_LIB = $(ETHERLAB)/lib/.libs
+ETHERCAT_INCLUDE = -I$(ETHERLAB)/include
+
+XZ_LIB=$(PACKAGE_SITE_TOP)/xz/5.2.2/rhel7-x86_64/lib
+XZ_INCLUDE = -I$(PACKAGE_SITE_TOP)/xz/5.2.2/rhel7-x86_64/include
+
+ZLIB_LIB=$(PACKAGE_SITE_TOP)/zlib/1.2.8/rhel7-x86_64/lib
+ZLIB_INCLUDE = -I$(PACKAGE_SITE_TOP)/zlib/1.2.8/rhel7-x86_64/include
+
+LIBXML2_LIB = $(PACKAGE_SITE_TOP)/libxml2/2.9.10/rhel7-x86_64/lib
+LIBXML2_INCLUDE = -I$(PACKAGE_SITE_TOP)/libxml2/2.9.10/rhel7-x86_64/include/libxml2
